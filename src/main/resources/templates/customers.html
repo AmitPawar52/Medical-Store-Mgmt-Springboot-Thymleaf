@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+	<div th:replace="fragments/navbar :: navbar"></div>
+	<div class="container">
+		<div th:switch="${customers}">
+			<h2 th:case="null">No users yet!</h2>
+			<div th:case="*">
+				<form th:action="@{/customers/search}" th:method="get">
+					<div class="row form-inline">
+						<div class="col-md-6 form-group">
+							<h2>Customers</h2>
+						</div>
+						<div class="col-md-6 form-group pull-right">
+							<input class="form-control input-sm" type="search" 
+									placeholder="Search by name" name="cust_search" 
+									aria-label="Search" id="cust_search">	
+							<span style="margin-left: 10px;">
+								<a th:href="@{/customers}"><button type="button" class="btn btn-success btn-sm">Clear Search</button></a>
+							</span>						
+						</div>
+						
+					</div>
+				</form>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Name</th>				
+							<th scope="col">ADDR</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="customer : ${customers}">
+							<td scope="row" th:text="${customer.name}"></td>
+							<!--  <td th:text="${#dates.format(customer.dob, 'dd MMM yyyy')}"></td> -->
+							<td th:text="${customer.address}"></td>
+							<td>
+								<a class="btn btn-primary btn-sm" 
+										th:href="@{/customers/{id}(id=${customer.id})}">
+									view profile
+								</a>
+								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" 
+									th:attr="data-target='#myModal'+${customer.id}">Delete</button>
+								
+								<div class="modal fade" th:attr="id='myModal'+${customer.id}">
+				                    <div class="modal-dialog">
+				                        <div class="modal-content">
+				                            <div class="modal-header">
+				                                <h4 class="modal-title">Are you sure?</h4>
+				                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+				                            </div>
+				                            <div class="modal-footer">
+				                                <button type="button" class="btn btn-danger"
+				                                    data-dismiss="modal">Close</button>
+				                                <a th:href="@{'/customers/deleteCustomer/'+${customer.id}}"><button
+				                                        type="button" class="btn btn-success">Yes</button></a>
+				                            </div>
+				                        </div>
+				                    </div>
+                				</div>                				
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<footer th:replace="fragments/footer :: footer"></footer>
+	</div>
+</body>
+</html>

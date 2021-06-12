@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/header :: head"></head>
+<body>
+	<div th:replace="fragments/navbar :: navbar"></div>
+	<div class="container-fluid">
+		<div class="jumbotron">
+			<h3
+				th:text="'Welcome to basic Bootstrap with Spring Boot created by ' + ${username}"></h3>
+			<p
+				th:text="'This date example  ' + ${#dates.format(datetime, 'dd MMM yyyy HH:mm')}"></p>
+			<p>is a quick exercise to illustrate how the default, static
+				navbar and fixed to top navbar work. It includes the responsive CSS
+				and HTML, so it also adapts to your viewport and device.</p>
+			<p>
+				<a class="btn btn-lg btn-primary" href="#" role="button">View
+					navbar docs &raquo;</a>
+			</p>
+		</div>
+	</div>
+<div class="container-fluid">
+	<footer th:replace="fragments/footer :: footer"></footer>
+</div>
+</body>
+</html>
